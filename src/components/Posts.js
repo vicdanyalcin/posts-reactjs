@@ -1,53 +1,82 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import React, { useState, useEffect } from "react";
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-});
-
-const data = fetch("https://jsonplaceholder.typicode.com/posts")
-  .then((response) => response.json())
-  .then((json) => console.log(json));
-
+import axios from "axios";
+import {
+  Card,
+  CardContent,
+  List,
+  ListItemText,
+  CardMedia,
+  CardActionArea,
+  CardActions,
+  Button,
+  IconButton,
+  Typography,
+  colors,
+} from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 export default function Posts() {
-  const classes = useStyles();
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState(allData);
+  const [color, setColor] = useState(false);
 
+  useEffect(() => {
+    axios("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => {
+        console.log(response.data);
+        setAllData(response.data);
+        setFilteredData(response.data);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, []);
+  const handleSearch = (event) => {
+    return null;
+  };
+  const like = () => {
+    setColor(!color);
+  };
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="140"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
+    <>
+      <Typography variant="h4" component="h4">
+        h1. Heading
+      </Typography>
+      {filteredData.map((value, index) => {
+        return (
+          <Card key={value.id}>
+            <CardActionArea>
+              {/* <CardMedia
+                style={{ height: 0, paddingTop: "3.25%" }}
+                image={value.url}
+              /> */}
+              <CardContent>
+                <List>
+                  <ListItemText style={{ color: "blue" }}>
+                    {value.userId}
+                  </ListItemText>
+                  <ListItemText style={{ color: "blue" }}>
+                    {value.title}
+                  </ListItemText>
+                </List>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <IconButton aria-label="add to favorites" onClick={like}>
+                {color ? (
+                  <FavoriteIcon style={{ fill: "red" }} />
+                ) : (
+                  <FavoriteIcon />
+                )}
+              </IconButton>
+              <IconButton aria-label="add to favorites">
+                <ChatBubbleIcon />
+              </IconButton>
+            </CardActions>
+          </Card>
+        );
+      })}
+    </>
   );
 }

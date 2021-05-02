@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ handleClose }) => {
+const Form = ({ handleClose, isLogged }) => {
   const classes = useStyles();
   // create state variables for each input
   const [firstName, setFirstName] = useState("");
@@ -53,7 +53,7 @@ const Form = ({ handleClose }) => {
           <Tab label="SignUp" />
         </Tabs>
       </Paper>
-      {value == 1 && (
+      {value === 1 && (
         <form className={classes.root} onSubmit={handleSubmit}>
           <TextField
             label="First Name"
@@ -95,7 +95,7 @@ const Form = ({ handleClose }) => {
           </div>
         </form>
       )}
-      {value == 0 && (
+      {value === 0 && (
         <form className={classes.root} onSubmit={handleSubmit}>
           <TextField
             label="Email"

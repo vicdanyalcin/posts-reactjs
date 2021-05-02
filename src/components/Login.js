@@ -5,24 +5,20 @@ import ModalDialog from "./ModalDialog";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
   const history = useHistory();
 
   // function to handle modal close
   const handleClose = () => {
     setOpen(false);
+    console.log(window.location.pathname);
     history.push("/");
+    console.log(window.location.pathname);
   };
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Login
-      </Button>
       <ModalDialog open={open} handleClose={handleClose} />
     </>
   );

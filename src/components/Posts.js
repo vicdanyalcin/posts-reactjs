@@ -20,7 +20,6 @@ export default function Posts() {
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
   const [color, setColor] = useState(false);
-
   useEffect(() => {
     axios("https://jsonplaceholder.typicode.com/posts")
       .then((response) => {
@@ -32,18 +31,32 @@ export default function Posts() {
         console.log("Error getting fake data: " + error);
       });
   }, []);
-  const handleSearch = (event) => {
-    return null;
-  };
+
   const like = () => {
     setColor(!color);
   };
+  function handleToggleComplete(id) {
+    console.log(id);
+    const newList = filteredData.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          color: !color,
+        };
+
+        return updatedItem;
+      }
+
+      return item;
+    });
+    setColor(!color)
+    setFilteredData(newList);  }
   return (
     <>
       <Typography variant="h4" component="h4">
         h1. Heading
       </Typography>
-      {filteredData.map((value, index) => {
+      {filteredData.map((value) => {
         return (
           <Card key={value.id}>
             <CardActionArea>
@@ -63,12 +76,12 @@ export default function Posts() {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <IconButton aria-label="add to favorites" onClick={like}>
-                {color ? (
-                  <FavoriteIcon style={{ fill: "red" }} />
-                ) : (
-                  <FavoriteIcon />
-                )}
+              <IconButton aria-label="add to favorites"  onClick={() => handleToggleComplete(value.id)} >
+
+                  <FavoriteIcon style={{
+                    fill: value.color
+                        ? 'red'
+                        : 'gray'}}/>
               </IconButton>
               <IconButton aria-label="add to favorites">
                 <ChatBubbleIcon />

@@ -3,26 +3,19 @@ import { Button } from "@material-ui/core";
 import Header from "./components/Header";
 import ModalDialog from "./components/ModalDialog";
 import Posts from "./components/Posts";
+import { Route, Switch } from "react-router-dom";
+import Login from "./components/Login";
+
 const App = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  // function to handle modal close
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div className="App">
-      <Header />
-      <Posts />
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Signup
-      </Button>
-      <ModalDialog open={open} handleClose={handleClose} />
+      <Switch>
+        <Route path="/" component={Header} exact />
+        <Route path="/posts" component={Posts} exact />
+        <Route path="/login" component={Login} exact />
+
+        <Posts />
+      </Switch>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Container, makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ handleClose, isLogged }) => {
-  const classes = useStyles();
+const Form = ({ handleClose }) => {
   // create state variables for each input
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,9 +29,12 @@ const Form = ({ handleClose, isLogged }) => {
   const [password, setPassword] = useState("");
   const [value, setValue] = useState(0);
 
+  const classes = useStyles();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(firstName, lastName, email, password);
@@ -114,9 +116,6 @@ const Form = ({ handleClose, isLogged }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div>
-            <Button variant="contained" onClick={handleClose}>
-              Cancel
-            </Button>
             <Button type="submit" variant="contained" color="primary">
               Login
             </Button>

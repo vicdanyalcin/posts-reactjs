@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Logout from "./components/Logout";
 
 const App = () => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -16,7 +17,7 @@ const App = () => {
   useEffect(() => {
     setIsUserAuthenticated(isUserAuthenticated);
     history.push("/login");
-  }, [!isUserAuthenticated, history]);
+  }, [isUserAuthenticated, history]);
   return (
     <div className="App">
       {window.location.pathname === "/login" ? <Header /> : <Navbar />}
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/" component={Home} exact />
         <Route path="/posts" component={Posts} exact />
         <Route path="/about" component={About} exact />
+        <Route path="/logout" component={Logout} exact />
       </Switch>
       <Footer />
     </div>

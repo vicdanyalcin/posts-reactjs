@@ -13,13 +13,50 @@ import {
   IconButton,
   Typography,
   colors,
+  TextField,
+  Container,
+  Grid,
+  makeStyles,
+  Paper,
+  Avatar,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    overflow: "hidden",
+    margin: `${theme.spacing(29)}px auto`,
+    padding: theme.spacing(0, 7),
+  },
+  paper: {
+    maxWidth: 800,
+    margin: `${theme.spacing(1)}px auto`,
+    paddingTop: 14.5,
+    paddingBottom: 14.5,
+  },
+  fullHeightButton: {
+    height: "100%",
+  },
+  textField: {
+    width: "auto",
+    marginLeft: "auto",
+    marginRight: "auto",
+    color: "white",
+    paddingBottom: 0,
+    marginTop: 0,
+    fontWeight: 500,
+    padding: theme.spacing(5),
+  },
+}));
 export default function Posts() {
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
   const [color, setColor] = useState(false);
+  const classes = useStyles();
+
   useEffect(() => {
     axios("https://jsonplaceholder.typicode.com/posts")
       .then((response) => {
@@ -49,47 +86,58 @@ export default function Posts() {
 
       return item;
     });
-    setColor(!color)
-    setFilteredData(newList);  }
+    setColor(!color);
+    setFilteredData(newList);
+  }
   return (
     <>
-      <Typography variant="h4" component="h4">
-        h1. Heading
-      </Typography>
-      {filteredData.map((value) => {
-        return (
-          <Card key={value.id}>
-            <CardActionArea>
-              {/* <CardMedia
-                style={{ height: 0, paddingTop: "3.25%" }}
-                image={value.url}
-              /> */}
-              <CardContent>
-                <List>
-                  <ListItemText style={{ color: "blue" }}>
-                    {value.userId}
-                  </ListItemText>
-                  <ListItemText style={{ color: "blue" }}>
-                    {value.title}
-                  </ListItemText>
-                </List>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <IconButton aria-label="add to favorites"  onClick={() => handleToggleComplete(value.id)} >
-
-                  <FavoriteIcon style={{
-                    fill: value.color
-                        ? 'red'
-                        : 'gray'}}/>
-              </IconButton>
-              <IconButton aria-label="add to favorites">
-                <ChatBubbleIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-        );
-      })}
+      <div className={classes.root}>
+        <Grid>
+          <Grid>
+            <TextField variant="outlined" fullWidth={true} />
+          </Grid>
+          <Button
+            classes={{ root: classes.fullHeightButton }}
+            variant="contained"
+            color="primary"
+          >
+            +
+          </Button>
+        </Grid>
+        <Grid item zeroMinWidth spacing={5}>
+          <Container>
+            <Typography variant="h6" component="h6">
+              Add post
+            </Typography>
+          </Container>
+          {filteredData.map((value) => {
+            return (
+              <Paper key={value.id} className={classes.paper}>
+                <Grid container wrap="nowrap" spacing={5}>
+                  <Grid item>
+                    <Avatar>{value.userId}</Avatar>
+                  </Grid>
+                  <Grid item xs zeroMinWidth>
+                    <Typography noWrap> {value.title}</Typography>
+                  </Grid>
+                  <Grid item xs zeroMinWidth>
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={() => handleToggleComplete(value.id)}
+                    >
+                      <FavoriteIcon
+                        style={{
+                          fill: value.color ? "red" : "gray",
+                        }}
+                      />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Paper>
+            );
+          })}
+        </Grid>
+      </div>
     </>
   );
 }

@@ -4,61 +4,75 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
-import ConfirmDialog from "./ConfirmDialog";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  link: {
+    marginLeft: theme.spacing(5),
   },
+
   title: {
     flexGrow: 1,
   },
 }));
 
-export default function Header() {
+const Navbar = () => {
   const classes = useStyles();
-  const handleConfirm = () => {
-    return <ConfirmDialog />;
-  };
+
   return (
     <div className={classes.root}>
       <AppBar position="absolute">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
-          <Link to="/" style={{ color: "#FFF" }}>
-            Home
-          </Link>
-          <Link to="/posts" style={{ color: "#FFF" }}>
-            Posts
-          </Link>
-          <Link to="/about" style={{ color: "#FFF" }}>
-            About{" "}
-          </Link>
+        <Container>
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              Content Ideas
+            </Typography>
+            <Link
+              to="/"
+              style={{ color: "#FFF", textDecoration: "none" }}
+              className={classes.link}
+            >
+              Home
+            </Link>
+            <Link
+              to="/posts"
+              style={{ color: "#FFF", textDecoration: "none" }}
+              className={classes.link}
+            >
+              Posts
+            </Link>
+            <Link
+              to="/about"
+              style={{ color: "#FFF", textDecoration: "none" }}
+              className={classes.link}
+            >
+              About{" "}
+            </Link>
 
-          <Link to="/contact" style={{ color: "#FFF" }}>
-            Contact{" "}
-          </Link>
-          <Link to="/login" style={{ color: "#FFF" }}>
-            Log out{" "}
-          </Link>
-        </Toolbar>
+            <Link
+              to="/contact"
+              style={{ color: "#FFF", textDecoration: "none" }}
+              className={classes.link}
+            >
+              Contact{" "}
+            </Link>
+            <Link
+              to="/logout"
+              style={{ color: "#FFF", textDecoration: "none" }}
+              className={classes.link}
+            >
+              Log out
+            </Link>
+          </Toolbar>
+        </Container>
       </AppBar>
     </div>
   );
-}
+};
+
+export default Navbar;

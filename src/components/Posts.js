@@ -2,17 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import {
-  Card,
-  CardContent,
-  List,
-  ListItemText,
-  CardMedia,
-  CardActionArea,
-  CardActions,
   Button,
   IconButton,
   Typography,
-  colors,
   TextField,
   Container,
   Grid,
@@ -21,8 +13,6 @@ import {
   Avatar,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,18 +82,6 @@ export default function Posts() {
   return (
     <>
       <div className={classes.root}>
-        <Grid>
-          <Grid>
-            <TextField variant="outlined" fullWidth={true} />
-          </Grid>
-          <Button
-            classes={{ root: classes.fullHeightButton }}
-            variant="contained"
-            color="primary"
-          >
-            +
-          </Button>
-        </Grid>
         <Grid item zeroMinWidth spacing={5}>
           <Container>
             <Typography variant="h6" component="h6">

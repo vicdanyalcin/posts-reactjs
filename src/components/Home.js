@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
-export const styles = () => ({
+const styles = () => ({
   root: {
     textAlign: "center",
     display: "flex",

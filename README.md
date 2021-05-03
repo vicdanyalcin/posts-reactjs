@@ -1,1 +1,1 @@
-https://vicdanyalcin.github.io/
+https://vicdanyalcin.github.io/posts-reactjs/
